@@ -53,7 +53,8 @@ const contexts = [
 
 const rules = {
   user: {
-    phone: ['edit', 'create_not_exist'], // user can edit & create_not_exist with phone
+    phone: ['edit', 'create_not_exist'], // user can edit & 
+                                         // create_not_exist with phone
   },
   manager: {
     phone: ['delete', 'edit'], // manager can delete & edit with phone
