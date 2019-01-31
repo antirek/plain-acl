@@ -50,6 +50,11 @@ class Acl {
     }
 
     can(role, context, action) {
+        if(this.roles && !this.roles[role])
+            throw new Error('not exist role: ' + role + ' in acl.roles');
+        
+        if(!this.rules[role]) return false;
+
         if(this.contexts && !this._checkContextInContexts(context))
             throw new Error('not available context: ' + context);
 

@@ -65,3 +65,13 @@ describe('manager 3', () => {
         }).toThrowError();
     });
 });
+
+describe('manager 3', () => {
+    it('throw error on init Acl', () => {
+        expect(() => {
+            const acl = new Acl(rules, contexts, roles);
+            acl.can('manager2')
+        }).toThrowError();
+    });
+});
+

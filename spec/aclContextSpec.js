@@ -32,7 +32,7 @@ const contexts = [
     }
 ];
 
-const roles_contexts_actions = {
+const rules = {
     user: {
         phone: ['edit', 'create_not_exist'],   // user can edit & create_not_exist with phone
     },
@@ -43,7 +43,7 @@ const roles_contexts_actions = {
 };
 
 const Acl = require('../index');
-const acl = new Acl(roles_contexts_actions, contexts);
+const acl = new Acl(rules, contexts);
 
 describe('manager', () => {
     it('can delete phone', () => {
@@ -58,10 +58,7 @@ describe('manager', () => {
 
 describe('manager2', () => {    
     it('can create phone', () => {
-        //not exist role throw Error
-        expect(() => {
-            acl.can('manager2', 'phone', 'create');
-        }).toThrowError();
+        expect(acl.can('manager2', 'phone', 'create')).toBe(false);
     });
 });
 
