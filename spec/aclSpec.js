@@ -58,7 +58,7 @@ describe('manager2', () => {
         //not exist role throw Error
         expect(() => {
             acl.can('manager2', 'phone', 'create');
-        }).toThrowError('not exist role: manager2');
+        }).toThrowError();
     });
 });
 

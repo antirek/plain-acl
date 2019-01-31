@@ -1,12 +1,29 @@
 
 class Acl {    
-    constructor(roles, contexts) {
-        if (!roles) throw new Error('roles for init acl empty');
-        this.roles = roles;
+    constructor(rules, contexts, roles) {
+        if (!rules) throw new Error('roles for init acl empty');
+        this.rules = rules;
 
         if (contexts) {
             if (!Array.isArray(contexts)) throw new Error('contexts must be array');
             this.contexts = contexts;
+        }
+
+        if (roles) {
+            if (!Array.isArray(contexts)) throw new Error('roles must be array');
+            this.roles = roles;
+            this._checkRolesInRules();
+        }
+    }
+
+    _checkRolesInRules () {
+        let rules = this.rules;
+        let roles = this.roles;
+        for (let prop in rules) {
+            let result = roles.find(item => {
+                return item.role === prop;
+            })
+            if (!result) throw new Error('no role: ' + prop + ' in roles list');
         }
     }
 
@@ -32,23 +49,17 @@ class Acl {
         return val.length > 0 ? true : false;
     }
 
-    can(role, context, action) {       
-        if (!this.roles)
-            throw new Error('no acl.roles');
-
-        if(!this.roles[role])
-            throw new Error('not exist role: ' + role);
-
+    can(role, context, action) {
         if(this.contexts && !this._checkContextInContexts(context))
             throw new Error('not available context: ' + context);
-        
+
         if(this.contexts && !this._checkActionInContext(action, context))
             throw new Error('not available action: ' + action + ' in context: ' + context);
 
-        if(!this.roles[role][context]) {
+        if(!this.rules[role][context]) {
             return false
         } else {
-            return this.roles[role][context].includes(action);
+            return this.rules[role][context].includes(action);
         }
     }
 }

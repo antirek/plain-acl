@@ -32,7 +32,7 @@ const contexts = [
     }
 ];
 
-const roles_contexts_actions = {
+const rules = {
     user: {
         phone: ['edit', 'create_not_exist'],   // user can edit & create_not_exist with phone
     },
@@ -42,31 +42,26 @@ const roles_contexts_actions = {
     },
 };
 
+const rules_with_unexist_role = {
+    user: {
+        phone: ['edit', 'create_not_exist'],   // user can edit & create_not_exist with phone
+    },
+    manager: {
+        phone: ['delete', 'edit'],             // manager can delete & edit with phone
+        not_exist_context: ['delete'],
+    },
+    manager3: {
+        phone: ['edit']
+    }
+};
+
 const Acl = require('../index');
-const acl = new Acl(roles_contexts_actions, contexts);
+const acl = new Acl(rules, contexts, roles);
 
-describe('manager', () => {
-    it('can delete phone', () => {
-        expect(acl.can('manager', 'phone', 'delete')).toBe(true);
-    });
-    it('can edit phone', () => {
+describe('manager 3', () => {
+    it('throw error on init Acl', () => {
         expect(() => {
-            acl.can('manager', 'phone', 'edit')
+            const acl = new Acl(rules_with_unexist_role, contexts, roles);
         }).toThrowError();
-    });
-});
-
-describe('manager2', () => {    
-    it('can create phone', () => {
-        //not exist role throw Error
-        expect(() => {
-            acl.can('manager2', 'phone', 'create');
-        }).toThrowError();
-    });
-});
-
-describe('user', () => {
-    it('can\'t delete phone', () => {
-        expect(acl.can('user', 'phone', 'delete')).toBe(false);
     });
 });

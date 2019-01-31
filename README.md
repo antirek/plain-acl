@@ -1,7 +1,7 @@
 # plain-acl
 Simple ACL
 
-No db. No extends. Simple JSON. Self-documented.
+No db. No extends. Simple JSON. Self-documented. For small & powerful apps :)
 
 ## How use?
 
