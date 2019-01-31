@@ -1,6 +1,6 @@
 // role -> context -> action
 
-const roles_description = [
+const roles = [
     {
         role: 'user',
         description: 'Простой пользователь'
@@ -18,6 +18,7 @@ const roles_description = [
 const contexts = [
     {
         context: 'phone',
+        description: '',
         actions: [
             {
                 action: 'delete',
@@ -33,23 +34,25 @@ const contexts = [
 
 const roles_contexts_actions = {
     user: {
-        phone: ['edit', 'create_not_exist'],
+        phone: ['edit', 'create_not_exist'],   // user can edit & create_not_exist with phone
     },
     manager: {
-        phone: ['delete', 'edit'],
+        phone: ['delete', 'edit'],             // manager can delete & edit with phone
         not_exist_context: ['delete'],
     },
 };
 
 const Acl = require('../index');
-const acl = new Acl(roles_contexts_actions);
+const acl = new Acl(roles_contexts_actions, contexts);
 
 describe('manager', () => {
     it('can delete phone', () => {
         expect(acl.can('manager', 'phone', 'delete')).toBe(true);
     });
     it('can edit phone', () => {
-        expect(acl.can('manager', 'phone', 'edit')).toBe(true);
+        expect(() => {
+            acl.can('manager', 'phone', 'edit')
+        }).toThrowError();
     });
 });
 
