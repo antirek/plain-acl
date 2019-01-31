@@ -49,8 +49,15 @@ class Acl {
         return val.length > 0 ? true : false;
     }
 
+    _checkRoleInRoles (role) {
+        let val = this.roles.filter((item) => {
+            return item['role'] === role;
+        })
+        return val.length > 0 ? true : false;
+    }
+
     can(role, context, action) {
-        if(this.roles && !this.roles[role])
+        if(this.roles && !this._checkRoleInRoles(role))
             throw new Error('not exist role: ' + role + ' in acl.roles');
         
         if(!this.rules[role]) return false;

@@ -27,6 +27,10 @@ const contexts = [
             {
                 action: 'edit_title',
                 description: 'Изменить название'
+            },
+            {
+                action: 'edit',
+                description: 'Изменить'
             }
         ]
     }
@@ -56,7 +60,14 @@ const rules_with_unexist_role = {
 };
 
 const Acl = require('../index');
-const acl = new Acl(rules, contexts, roles);
+
+describe('manager edit phone', () => {
+    it('throw error on init Acl', () => {        
+        const acl = new Acl(rules, contexts, roles);
+        expect(acl.can('manager', 'phone', 'edit')).toBe(true);
+    });
+});
+
 
 describe('manager 3', () => {
     it('throw error on init Acl', () => {
@@ -70,7 +81,7 @@ describe('manager 3', () => {
     it('throw error on init Acl', () => {
         expect(() => {
             const acl = new Acl(rules, contexts, roles);
-            acl.can('manager2')
+            acl.can('manager3', 'phone', 'edit');
         }).toThrowError();
     });
 });
