@@ -73,7 +73,10 @@ class Acl {
   }
 
   _checkAllActionInRules(role, context) {
-    return this.rules[role][context].includes('all');
+    if (this.rules[role] && this.rules[role][context]) {
+      return this.rules[role][context].includes('all');
+    }
+    return false;
   }
 
   can(role, context, action) {

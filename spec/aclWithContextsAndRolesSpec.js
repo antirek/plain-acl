@@ -93,6 +93,13 @@ describe('manager', () => {
   });
 });
 
+describe('user', () => {
+  it('not assigned in rules action', () => {
+    const acl = new Acl(rules, contexts, roles);
+    expect(acl.can('user', 'data', 'print')).toBe(false);
+  });
+});
+
 describe('manager', () => {
   it('context with action == all', () => {
     const acl = new Acl(rules, contexts, roles);
