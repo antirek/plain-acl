@@ -38,7 +38,7 @@ const rules = {
                                          // create_not_exist with phone
   },
   manager: {
-    phone: ['delete', 'edit'], // manager can delete & edit with phone
+    phone: ['delete', 'edit'],          // manager can delete & edit with phone
     not_exist_context: ['delete'],
   },
 };
@@ -52,7 +52,7 @@ describe('manager', () => {
   });
   it('can edit phone', () => {
     expect(() => {
-      acl.can('manager', 'phone', 'edit');
+      acl.can('manager', 'phone', 'edit')
     }).toThrowError();
   });
 });

@@ -7,6 +7,7 @@ class Acl {
     if (contexts) {
       if (!Array.isArray(contexts)) throw new Error('contexts must be array');
       this.contexts = contexts;
+      this._fillContextsWithAllAction();
     }
 
     if (roles) {
@@ -31,6 +32,28 @@ class Acl {
     return rules;
   }
 
+  _fillContextsWithAllAction () {
+    if (this.contexts && Array.isArray(this.contexts)){ 
+      let contexts = this.contexts;
+      this.contexts = contexts.map((context) => {
+        let actions = context.actions;
+        if (!actions) {
+          actions = [{action: 'all'}];
+          context.actions = actions;
+          return context;
+        }
+        if (actions && Array.isArray(actions)) {
+          if (!actions.find((action) => {
+            return action.action == 'all';
+          })) {
+            actions.push({action: 'all'});
+          }
+          return context;
+        }
+      })
+    }
+  }
+
   _checkRolesInRules() {
     const rules = this.rules;
     const roles = this.roles;
@@ -43,6 +66,7 @@ class Acl {
   }
 
   _checkContextInContexts(context) {
+    //console.log('context', context);
     const val = this.contexts.filter((item) => {
       return item['context'] === context;
     });
@@ -59,8 +83,7 @@ class Acl {
   _checkActionInContext(action, context) {
     const contextR = this._getContextFromContexts(context);
     const val = contextR.actions.filter((item) => {
-      return (item['action'] === action) ||
-                   (item['action'] === 'all');
+      return item['action'] === action;
     });
     return val.length > 0 ? true : false;
   }
@@ -79,7 +102,7 @@ class Acl {
     return false;
   }
 
-  can(role, context, action) {
+  can(role, context, action = 'all') {
     if (this.roles && !this._checkRoleInRoles(role)) {
       throw new Error('not exist role: ' + role + ' in acl.roles');
     }
