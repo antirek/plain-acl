@@ -19,8 +19,7 @@ class Acl {
 
   _prepareRules(rules) {
     for (const role in rules) {
-      for (const context in rules[role]) {
-        // console.log('context', context);
+      for (const context in rules[role]) {        
         if (typeof(rules[role][context]) === 'string') {
           const c = [];
           c[0] = rules[role][context];
@@ -28,7 +27,6 @@ class Acl {
         }
       }
     }
-    // console.log('rules', rules);
     return rules;
   }
 
@@ -66,7 +64,7 @@ class Acl {
   }
 
   _checkContextInContexts(context) {
-    //console.log('context', context);
+    
     const val = this.contexts.filter((item) => {
       return item['context'] === context;
     });

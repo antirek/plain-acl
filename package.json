@@ -1,6 +1,6 @@
 {
   "name": "plain-acl",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Simple ACL",
   "main": "index.js",
   "scripts": {
