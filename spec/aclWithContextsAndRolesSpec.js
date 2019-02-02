@@ -53,8 +53,8 @@ const contexts = [
 
 const rules = {
   user: {
-    phone: ['edit', 'create_not_exist'], // user can edit & 
-                                         // create_not_exist with phone
+    phone: ['edit', 'create_not_exist'], // user can edit &
+    // create_not_exist with phone
   },
   manager: {
     phone: ['delete', 'edit'], // manager can delete & edit with phone
@@ -64,9 +64,10 @@ const rules = {
   },
 };
 
-const rules_with_unexist_role = {
+const rulesWithUnexistRole = {
   user: {
-    phone: ['edit', 'create_not_exist'], // user can edit & create_not_exist with phone
+    phone: ['edit', 'create_not_exist'], // user can edit &
+    // create_not_exist with phone
   },
   manager: {
     phone: ['delete', 'edit'], // manager can delete & edit with phone
@@ -110,7 +111,7 @@ describe('manager', () => {
 describe('manager 3', () => {
   it('throw error on init Acl', () => {
     expect(() => {
-      const acl = new Acl(rules_with_unexist_role, contexts, roles);
+      new Acl(rulesWithUnexistRole, contexts, roles);
     }).toThrowError();
   });
 });

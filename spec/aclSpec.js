@@ -1,36 +1,5 @@
 // role -> context -> action
 
-const roles_description = [
-  {
-    role: 'user',
-    description: 'Простой пользователь',
-  },
-  {
-    role: 'manager',
-    description: 'Менеджер',
-  },
-  {
-    role: 'manager2',
-    description: 'менеджер 2-го типа',
-  },
-];
-
-const contexts = [
-  {
-    context: 'phone',
-    actions: [
-      {
-        action: 'delete',
-        description: 'Удалить',
-      },
-      {
-        action: 'edit_title',
-        description: 'Изменить название',
-      },
-    ],
-  },
-];
-
 const rules = {
   user: {
     phone: ['edit', 'create_not_exist'],

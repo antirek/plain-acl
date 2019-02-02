@@ -1,20 +1,5 @@
 // role -> context -> action
 
-const roles = [
-  {
-    role: 'user',
-    description: 'Простой пользователь',
-  },
-  {
-    role: 'manager',
-    description: 'Менеджер',
-  },
-  {
-    role: 'manager2',
-    description: 'менеджер 2-го типа',
-  },
-];
-
 const contexts = [
   {
     context: 'phone',
@@ -34,11 +19,11 @@ const contexts = [
 
 const rules = {
   user: {
-    phone: ['edit', 'create_not_exist'], // user can edit & 
-                                         // create_not_exist with phone
+    phone: ['edit', 'create_not_exist'], // user can edit &
+    // create_not_exist with phone
   },
   manager: {
-    phone: ['delete', 'edit'],          // manager can delete & edit with phone
+    phone: ['delete', 'edit'], // manager can delete & edit with phone
     not_exist_context: ['delete'],
   },
 };
@@ -52,7 +37,7 @@ describe('manager', () => {
   });
   it('can edit phone', () => {
     expect(() => {
-      acl.can('manager', 'phone', 'edit')
+      acl.can('manager', 'phone', 'edit');
     }).toThrowError();
   });
 });
