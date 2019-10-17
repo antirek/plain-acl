@@ -25,6 +25,10 @@ const contexts = [
     description: 'Пользователи',
   },
   {
+    context: 'phone',
+    description: 'Телефоны',
+  },
+  {
     context: 'ivr',
     description: 'Голосовые меню',
   },
