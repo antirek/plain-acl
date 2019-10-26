@@ -196,6 +196,35 @@ class Acl {
       return this.rules[role][context].includes(action);
     }
   }
+
+  getTableData () {
+    const headers = [];
+    headers[0] = 'context';
+    headers[1] = 'action';
+
+    this.roles.map((role) => {
+      headers.push(role.description);
+    });
+
+    const rows = [];
+    this.contexts.forEach((context) => {      
+      context.actions.forEach((action) => {
+        const row = [];
+        row[0] = context.context;
+        row[1] = action.action;
+        this.roles.forEach((role) => {
+          row.push(this.can(role.role, context.context, action.action) ?
+            'yes' : 'no');
+        });
+        rows.push(row);
+      });
+    });
+
+    return {
+      headers,
+      rows,
+    }
+  }
 }
 
 module.exports = Acl;

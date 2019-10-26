@@ -68,34 +68,15 @@ const user = {
 
 const Table = require('tty-table');
 
-const headers = [];
-headers[0] = {value: 'context'};
-headers[1] = {value: 'action'};
-roles.map((role) => {
-  headers.push({
-    value: role.description,
-  });
-});
+const table = acl.getTableData();
 
-const rows = [];
-contexts.forEach((context) => {
-  // console.log('context', context.context);
-  context.actions.forEach((action) => {
-    const row = [];
-    row[0] = context.context;
-    row[1] = action.action;
-    console.log('action', action.action);
-    roles.forEach((role) => {
-      console.log('role', role.role);
-      row.push(acl.can(role.role, context.context, action.action) ?
-        'yes' : 'no');
-    });
-    rows.push(row);
-  });
-});
+const headers = table.headers.map(h => {return {'value': h}});
+const rows = table.rows;
+
+console.log(headers, rows);
 
 if (acl.can(user.role, 'data', 'print')) {
-  console.log('user can print data');
+  // console.log('user can print data');
   /* eslint new-cap: ["error", { "capIsNew": false }]*/
   const t3 = Table(headers, rows);
   console.log(t3.render());
