@@ -123,5 +123,19 @@ describe('manager 3', () => {
       acl.can('manager3', 'phone', 'edit');
     }).toThrowError();
   });
+
+  it('rules by role', () => {
+    const acl = new Acl(rules, contexts, roles);
+    const rules2 = acl.getRulesByRole('manager');
+    // console.log('rules', rules2);
+    const availableRules = [
+      {action: 'delete', description: 'Удалить', context: 'phone'},
+      {action: 'edit', description: 'Изменить', context: 'phone'},
+      {action: 'print', description: 'Print all', context: 'data'},
+      {action: 'all', context: 'queue'},
+    ];
+
+    expect(rules2).toEqual(availableRules);
+  });
 });
 

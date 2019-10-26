@@ -70,7 +70,9 @@ const Table = require('tty-table');
 
 const table = acl.getTableData();
 
-const headers = table.headers.map(h => {return {'value': h}});
+const headers = table.headers.map((h) => {
+  return {'value': h};
+});
 const rows = table.rows;
 
 console.log(headers, rows);

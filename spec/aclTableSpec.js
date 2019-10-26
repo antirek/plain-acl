@@ -69,17 +69,17 @@ const headers = [
   'action',
   'Простой пользователь',
   'Менеджер',
-  'менеджер 2-го типа'
+  'менеджер 2-го типа',
 ];
 
-const rows = [ 
-  [ 'phone', 'delete', 'no', 'yes', 'no' ],
-  [ 'phone', 'edit_title', 'no', 'no', 'no' ],
-  [ 'phone', 'edit', 'yes', 'yes', 'no' ],
-  [ 'phone', 'all', 'no', 'no', 'no' ],
-  [ 'data', 'print', 'no', 'yes', 'no' ],
-  [ 'data', 'all', 'no', 'no', 'no' ],
-  [ 'queue', 'all', 'no', 'yes', 'no' ] 
+const rows = [
+  ['phone', 'delete', 'no', 'yes', 'no'],
+  ['phone', 'edit_title', 'no', 'no', 'no'],
+  ['phone', 'edit', 'yes', 'yes', 'no'],
+  ['phone', 'all', 'no', 'no', 'no'],
+  ['data', 'print', 'no', 'yes', 'no'],
+  ['data', 'all', 'no', 'no', 'no'],
+  ['queue', 'all', 'no', 'yes', 'no'],
 ];
 
 const Acl = require('../index');

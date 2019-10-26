@@ -26,10 +26,10 @@ class Acl {
   }
 
   /**
-   * 
+   *
    * @return {*}
    */
-  getData () {
+  getData() {
     return {
       roles: this.roles,
       contexts: this.contexts,
@@ -197,7 +197,11 @@ class Acl {
     }
   }
 
-  getTableData () {
+  /**
+   *
+   * @return {*}
+   */
+  getTableData() {
     const headers = [];
     headers[0] = 'context';
     headers[1] = 'action';
@@ -207,7 +211,7 @@ class Acl {
     });
 
     const rows = [];
-    this.contexts.forEach((context) => {      
+    this.contexts.forEach((context) => {
       context.actions.forEach((action) => {
         const row = [];
         row[0] = context.context;
@@ -223,7 +227,46 @@ class Acl {
     return {
       headers,
       rows,
+    };
+  }
+
+
+  /**
+   *
+   * @param {*} role
+   * @return {*}
+   */
+  getRulesByRole(role) {
+    const rulesForRole = this.rules[role];
+    if (!rulesForRole) return;
+
+    const rules = [];
+
+    const f = (key) => {
+      const context = this.contexts.find((context) => context.context === key);
+      if (!context || !context.actions) return;
+
+      const rulesInContext = rulesForRole[key];
+      const availableActions = context.actions.filter((action) => {
+        return rulesInContext.includes(action.action);
+      });
+
+      const availableActions2 = availableActions.map((action) => {
+        return Object.assign(action, {context: context.context});
+      });
+
+      availableActions2.map((action) => {
+        rules.push(action);
+      });
+    };
+
+    for (const key in rulesForRole) {
+      if ({}.hasOwnProperty.call(rulesForRole, key)) {
+        f(key);
+      }
     }
+
+    return rules;
   }
 }
 

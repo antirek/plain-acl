@@ -17,8 +17,8 @@ describe('return data', () => {
   it('return rules', () => {
     const data = acl.getData();
     expect(data.rules).toBe(rules);
-  })
-})
+  });
+});
 
 describe('manager', () => {
   it('can delete phone', () => {
