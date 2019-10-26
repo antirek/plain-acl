@@ -13,6 +13,13 @@ const rules = {
 const Acl = require('../index');
 const acl = new Acl(rules);
 
+describe('return data', () => {
+  it('return rules', () => {
+    const data = acl.getData();
+    expect(data.rules).toBe(rules);
+  })
+})
+
 describe('manager', () => {
   it('can delete phone', () => {
     expect(acl.can('manager', 'phone', 'delete')).toBe(true);

@@ -26,6 +26,18 @@ class Acl {
   }
 
   /**
+   * 
+   * @return {*}
+   */
+  getData () {
+    return {
+      roles: this.roles,
+      contexts: this.contexts,
+      rules: this.rules,
+    };
+  }
+
+  /**
    *
    * @param {*} rules
    * @return {*}
