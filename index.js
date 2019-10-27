@@ -268,6 +268,48 @@ class Acl {
 
     return rules;
   }
+
+  /**
+   *
+   * @param {*} param0
+   * @return {*}
+   */
+  middleware({debug}) {
+    return (req, res, next) => {
+      /**
+       * @param {string} context
+       * @param {string} action
+       * @return {boolean}
+       * @description check true or false
+       */
+      req.aclCheck = (context, action) => {
+        if (!this.can(req.user.role, context, action)) {
+          if (debug) {
+            console.log('restriction access', req.originalUrl,
+                req.user, context, action);
+          }
+          return false;
+        }
+        return true;
+      };
+
+      /**
+       * @param {string} context
+       * @param {string} action
+       * @return {boolean}
+       * @description reject with 403 http
+       */
+      req.aclReject = (context, action) => {
+        if (!req.aclCheck(context, action)) {
+          res.status(403).jsend.fail('no access');
+          res.end();
+          return false;
+        }
+        return true;
+      };
+      next();
+    };
+  }
 }
 
 module.exports = Acl;
